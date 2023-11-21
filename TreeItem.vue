@@ -1,29 +1,38 @@
-<script setup>
-import { ref, computed } from 'vue'
-
-const props = defineProps({
-  model: Object
-})
-
-const isOpen = ref(false)
-const isFolder = computed(() => {
-  return props.model.children && props.model.children.length
-})
-
-function toggle() {
-  isOpen.value = !isOpen.value
-}
-
-function changeType() {
-  if (!isFolder.value) {
-    props.model.children = []
-    addChild()
-    isOpen.value = true
+<script>
+export default {
+  name: 'TreeItem', // necessary for self-reference
+  props: {
+    model: Object
+  },
+  data() {
+    return {
+      isOpen: false
+    }
+  },
+  computed: {
+    isFolder() {
+      return this.model.children && this.model.children.length
+    }
+  },
+  methods: {
+    toggle() {
+      if (this.isFolder) {
+        this.isOpen = !this.isOpen
+      }
+    },
+    changeType() {
+      if (!this.isFolder) {
+        this.model.children = []
+        this.addChild()
+        this.isOpen = true
+      }
+    },
+    addChild() {
+      this.model.children.push({
+        name: 'new stuff'
+      })
+    }
   }
-}
-
-function addChild() {
-  props.model.children.push({ name: 'new stuff' })
 }
 </script>
 

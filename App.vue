@@ -3,32 +3,42 @@ A nested tree component that recursively renders itself.
 You can double click on an item to turn it into a folder.
 -->
 
-<script setup>
-import { ref } from 'vue'
+<script>
 import TreeItem from './TreeItem.vue'
 
-const treeData = ref({
+const treeData = {
   name: 'My Tree',
   children: [
     { name: 'hello' },
-    { name: 'world' },
+    { name: 'wat' },
     {
       name: 'child folder',
       children: [
         {
           name: 'child folder',
-          children: [{ name: 'hello' }, { name: 'world' }]
+          children: [{ name: 'hello' }, { name: 'wat' }]
         },
         { name: 'hello' },
-        { name: 'world' },
+        { name: 'wat' },
         {
           name: 'child folder',
-          children: [{ name: 'hello' }, { name: 'world' }]
+          children: [{ name: 'hello' }, { name: 'wat' }]
         }
       ]
     }
   ]
-})
+}
+
+export default {
+  components: {
+    TreeItem
+  },
+  data() {
+    return {
+      treeData
+    }
+  }
+}
 </script>
 
 <template>
