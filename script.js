@@ -1,40 +1,38 @@
-import { ref } from 'vue'
 new Vue({
     el: '#app',
     data: {
-        treeData: ref({
+        treeData: {
             name: 'My Tree',
-            children: [{ 
-                name: 'Складская техника',
-                url: 'https://deltainzhiniring.ru/sklad/',
-                children: [{
+            children: [{
                     name: 'Складская техника',
-                    url: 'https://deltainzhiniring.ru/sklad/'
-                }]
-             },
-              { name: 'world' },
-              {
-                name: 'child folder',
-                children: [
-                  {
+                    url: 'https://deltainzhiniring.ru/sklad/',
+                    children: [{
+                        name: 'Складская техника',
+                        url: 'https://deltainzhiniring.ru/sklad/'
+                    }]
+                },
+                { name: 'world' },
+                {
                     name: 'child folder',
-                    children: [{ name: 'hello' }, { name: 'world' }]
-                  },
-                  { name: 'hello' },
-                  { name: 'world' },
-                  {
-                    name: 'child folder',
-                    children: [{ name: 'hello' }, { name: 'world' }]
-                  }
-                ]
-              }
+                    children: [{
+                            name: 'child folder',
+                            children: [{ name: 'hello' }, { name: 'world' }]
+                        },
+                        { name: 'hello' },
+                        { name: 'world' },
+                        {
+                            name: 'child folder',
+                            children: [{ name: 'hello' }, { name: 'world' }]
+                        }
+                    ]
+                }
             ]
-          }),
-        props: defineProps({model: Object}),
+        },
+        props: defineProps({ model: Object }),
         isOpen: ref(false),
         isFolder: computed(() => {
-  return props.model.children && props.model.children.length
-})
+            return props.model.children && props.model.children.length
+        })
 
         // items: [ {
         //     name: 'Складская техника',
@@ -126,18 +124,18 @@ new Vue({
         // show:false,
     },
     methods: {
-      toggle() {
-        isOpen.value = !isOpen.value
-      },
-      changeType() {
-        if (!isFolder.value) {
-          props.model.children = []
-          addChild()
-          isOpen.value = true
-        }
-      },
-      addChild() {
-        props.model.children.push({ name: 'new stuff' })
-      },
+        toggle() {
+            isOpen.value = !isOpen.value
+        },
+        changeType() {
+            if (!isFolder.value) {
+                props.model.children = []
+                addChild()
+                isOpen.value = true
+            }
+        },
+        addChild() {
+            props.model.children.push({ name: 'new stuff' })
+        },
     }
 })
