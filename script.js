@@ -1,38 +1,39 @@
-new Vue({
-    el: '#app',
-    data: {
-        treeData: {
-            name: 'My Tree',
-            children: [{
-                    name: 'Складская техника',
-                    url: 'https://deltainzhiniring.ru/sklad/',
-                    children: [{
-                        name: 'Складская техника',
-                        url: 'https://deltainzhiniring.ru/sklad/'
-                    }]
-                },
-                { name: 'world' },
-                {
-                    name: 'child folder',
-                    children: [{
-                            name: 'child folder',
-                            children: [{ name: 'hello' }, { name: 'world' }]
-                        },
-                        { name: 'hello' },
-                        { name: 'world' },
-                        {
-                            name: 'child folder',
-                            children: [{ name: 'hello' }, { name: 'world' }]
-                        }
-                    ]
-                }
-            ]
+import { createApp } from 'vue'
+import TreeItem from './TreeItem.js'
+
+const treeData = {
+  name: 'My Tree',
+  children: [
+    { name: 'hello' },
+    { name: 'wat' },
+    {
+      name: 'child folder',
+      children: [
+        {
+          name: 'child folder',
+          children: [{ name: 'hello' }, { name: 'wat' }]
         },
-        props: defineProps({ model: Object }),
-        isOpen: ref(false),
-        isFolder: computed(() => {
-            return props.model.children && props.model.children.length
-        })
+        { name: 'hello' },
+        { name: 'wat' },
+        {
+          name: 'child folder',
+          children: [{ name: 'hello' }, { name: 'wat' }]
+        }
+      ]
+    }
+  ]
+}
+
+createApp({
+  components: {
+    TreeItem
+  },
+  data() {
+    return {
+      treeData
+    }
+  }
+}).mount('#app')
 
         // items: [ {
         //     name: 'Складская техника',
@@ -122,20 +123,3 @@ new Vue({
         // }
         // ],
         // show:false,
-    },
-    methods: {
-        toggle() {
-            isOpen.value = !isOpen.value
-        },
-        changeType() {
-            if (!isFolder.value) {
-                props.model.children = []
-                addChild()
-                isOpen.value = true
-            }
-        },
-        addChild() {
-            props.model.children.push({ name: 'new stuff' })
-        },
-    }
-})
