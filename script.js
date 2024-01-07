@@ -1,8 +1,17 @@
-import { createApp } from 'vue'
+
 import TreeItem from './TreeItem.js'
 
-const treeData = {
-  name: 'My Tree',
+Vue.component(TreeItem, {
+  data() {
+      return {
+        treeData
+      };
+  },
+});
+
+const app = new Vue({
+  el: '#app',
+  data: {
   children: [
     { name: 'hello' },
     { name: 'wat' },
@@ -19,21 +28,22 @@ const treeData = {
           name: 'child folder',
           children: [{ name: 'hello' }, { name: 'wat' }]
         }
-      ]
+        ]
     }
   ]
 }
+})
 
-createApp({
-  components: {
-    TreeItem
-  },
-  data() {
-    return {
-      treeData
-    }
-  }
-}).mount('#app')
+// createApp({
+//   components: {
+//     TreeItem
+//   },
+//   data() {
+//     return {
+//       treeData
+//     }
+//   }
+// }).mount('#app')
 
         // items: [ {
         //     name: 'Складская техника',
