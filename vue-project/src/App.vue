@@ -7,21 +7,21 @@ You can double click on an item to turn it into a folder.
 import TreeItem from './components/TreeItem.vue'
 
 const treeData = {
-  name: 'My Tree',
+  name: 'Каталог',
   children: [
     {
       name: 'Складская техника',
       url: 'https://deltainzhiniring.ru/sklad/',
-      children: [
-        {
-          name: 'Складская техника',
-          url: 'https://deltainzhiniring.ru/sklad/',
-        },
-        {
-          name: 'Складская техника',
-          url: 'https://deltainzhiniring.ru/sklad/',
-        },
-      ]
+      // children: [
+      //   {
+      //     name: 'Складская техника',
+      //     url: 'https://deltainzhiniring.ru/sklad/',
+      //   },
+      //   {
+      //     name: 'Складская техника',
+      //     url: 'https://deltainzhiniring.ru/sklad/',
+      //   },
+      // ]
     },
     {
       name: 'Грузоподъёмное оборудование',

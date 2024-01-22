@@ -38,9 +38,10 @@ export default {
 
 <template>
   <li>
+    <!-- <a href="{{ model.url }}"></a> -->
     <div :class="{ bold: isFolder }" @click="toggle" @dblclick="changeType">
       {{ model.name }}
-      <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
+      <!-- <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span> -->
     </div>
     <ul v-show="isOpen" v-if="isFolder">
       <!--
