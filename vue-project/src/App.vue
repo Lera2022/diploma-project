@@ -5,6 +5,7 @@ You can double click on an item to turn it into a folder.
 
 <script>
 import TreeItem from './components/TreeItem.vue'
+import ListsItem from './components/ListsItem.vue'
 
 const treeData = {
   name: 'Каталог',
@@ -120,7 +121,8 @@ const treeData = {
 
 export default {
   components: {
-    TreeItem
+    TreeItem,
+    ListsItem
   },
   data() {
     return {
@@ -136,6 +138,8 @@ export default {
     <ul>
       <TreeItem class="item" :model="treeData"></TreeItem>
     </ul>
+
+    <ListsItem />
   </div>
 </template>
 
