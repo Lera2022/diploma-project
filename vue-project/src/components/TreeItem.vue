@@ -38,17 +38,21 @@ export default {
 
 <template>
   <li>
+    <!-- <img src="../assets/icon_hamburger.png" alt="иконка бургер-меню" width="18px" height="21px"> -->
     <!-- <a href="{{ model.url }}"></a> -->
-    <div :class="{ bold: isFolder }" @click="toggle" @dblclick="changeType">
+    <a class=" list_item" :class="{ bold: isFolder }" @click="toggle" @dblclick="changeType" :href="model.url"
+      target="_blank">
+      <img class="menu_item" :src="model.img" :alt="model.name">
       {{ model.name }}
+
       <!-- <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span> -->
-    </div>
+    </a>
     <ul v-show="isOpen" v-if="isFolder">
       <!--
         A component can recursively render itself using its
         "name" option (inferred from filename if using SFC)
       -->
-      <TreeItem class="item" v-for="model in model.children" :model="model">
+      <TreeItem class="item" v-for=" model  in  model.children " :model="model">
       </TreeItem>
       <!-- <li class="add" @click="addChild">+</li> -->
     </ul>

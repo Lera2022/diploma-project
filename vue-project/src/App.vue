@@ -8,10 +8,12 @@ import TreeItem from './components/TreeItem.vue'
 
 const treeData = {
   name: 'Каталог',
+  img: './icon_hamburger.png',
   children: [
     {
       name: 'Складская техника',
       url: 'https://deltainzhiniring.ru/sklad/',
+      img: './sklad.png'
       // children: [
       //   {
       //     name: 'Складская техника',
@@ -25,75 +27,93 @@ const treeData = {
     },
     {
       name: 'Грузоподъёмное оборудование',
-      url: 'https://deltainzhiniring.ru/gruzopodyomnoe/'
+      url: 'https://deltainzhiniring.ru/gruzopodyomnoe/',
+      img: './gruz.png'
     },
     {
       name: 'Станки',
-      url: 'https://deltainzhiniring.ru/stanki/'
+      url: 'https://deltainzhiniring.ru/stanki/',
+      img: './stanki.png'
     },
     {
       name: 'Строительное оборудование',
-      url: 'https://deltainzhiniring.ru/stroitelnoe/'
+      url: 'https://deltainzhiniring.ru/stroitelnoe/',
+      img: './stroy.png'
     },
     {
       name: 'Окрасочное оборудование',
-      url: 'https://deltainzhiniring.ru/okrasochnoe/'
+      url: 'https://deltainzhiniring.ru/okrasochnoe/',
+      img: './okraska.png'
     },
     {
       name: 'Генераторы и электростанции',
-      url: 'https://deltainzhiniring.ru/generatoryi/'
+      url: 'https://deltainzhiniring.ru/generatoryi/',
+      img: './generatory.png'
     },
     {
       name: 'Компрессоры воздушные',
-      url: 'https://deltainzhiniring.ru/kompressoryi'
+      url: 'https://deltainzhiniring.ru/kompressoryi',
+      img: './kompressory.png'
     },
     {
       name: 'Сварочное оборудование',
-      url: 'https://deltainzhiniring.ru/svarochnoe/'
+      url: 'https://deltainzhiniring.ru/svarochnoe/',
+      img: './svarochnoe.png'
     },
     {
       name: 'Пневматический инструмент',
-      url: 'https://deltainzhiniring.ru/pnevmaticheskoe/'
+      url: 'https://deltainzhiniring.ru/pnevmaticheskoe/',
+      img: './pnevmatika.png'
     },
     {
       name: 'Профессиональное оборудование для общепита',
-      url: 'https://deltainzhiniring.ru/kuxonnoe/'
+      url: 'https://deltainzhiniring.ru/kuxonnoe/',
+      img: './obschepit.png'
     },
     {
       name: 'Упаковочное и фасовочное оборудование',
-      url: 'https://deltainzhiniring.ru/upakovochnoe/'
+      url: 'https://deltainzhiniring.ru/upakovochnoe/',
+      img: './upakovka.png'
     },
     {
       name: 'Материалы для гидроизоляции деформационных швов',
-      url: 'https://deltainzhiniring.ru/akvastop/'
+      url: 'https://deltainzhiniring.ru/akvastop/',
+      img: './materialy.png'
     },
     {
       name: 'Оборудование для обустройства дорог и парковок',
-      url: 'https://deltainzhiniring.ru/parkovochnoe/'
+      url: 'https://deltainzhiniring.ru/parkovochnoe/',
+      img: './dorogi.png'
     },
     {
       name: 'Гидравлическое оборудование и инструменты',
-      url: 'https://deltainzhiniring.ru/gidravlicheskoe/'
+      url: 'https://deltainzhiniring.ru/gidravlicheskoe/',
+      img: './gidravlika.png'
     },
     {
       name: 'Оборудование для автосервиса',
-      url: 'https://deltainzhiniring.ru/avtoservis/'
+      url: 'https://deltainzhiniring.ru/avtoservis/',
+      img: './avtoservis.png'
     },
     {
       name: 'Оборудование для клининга',
-      url: 'https://deltainzhiniring.ru/sadovaya/'
+      url: 'https://deltainzhiniring.ru/sadovaya/',
+      img: './klining.png'
     },
     {
       name: 'Промышленная вентиляция и отопление',
-      url: 'https://deltainzhiniring.ru/ventilyacziya/'
+      url: 'https://deltainzhiniring.ru/ventilyacziya/',
+      img: './vent.png'
     },
     {
       name: 'Ультразвуковое оборудование',
-      url: 'https://deltainzhiniring.ru/ultrazvuk/'
+      url: 'https://deltainzhiniring.ru/ultrazvuk/',
+      img: './ultrazv.png'
     },
     {
       name: 'Насосное оборудование',
-      url: 'https://deltainzhiniring.ru/nasosyi/'
+      url: 'https://deltainzhiniring.ru/nasosyi/',
+      img: './nasosy.png'
     }
   ]
 }
@@ -111,9 +131,12 @@ export default {
 </script>
 
 <template>
-  <ul>
-    <TreeItem class="item" :model="treeData"></TreeItem>
-  </ul>
+  <div class="burger">
+
+    <ul>
+      <TreeItem class="item" :model="treeData"></TreeItem>
+    </ul>
+  </div>
 </template>
 
 <style>
@@ -124,5 +147,38 @@ export default {
 
 .bold {
   font-weight: bold;
+  color: #fff;
+
+  /* padding: 0 40px; */
+}
+
+.menu_item {
+  margin-right: 10px;
+
+}
+
+
+
+.burger {
+  /* display: flex;
+  gap: 20px; */
+  /* background-image: url(../public/icon_hamburger.png);
+  background-repeat: no-repeat;
+  background-position-y: center; */
+  background-color: #2e7182;
+  width: 270px;
+  height: 42px;
+  /* padding-left: 38px; */
+}
+
+.list_item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  margin-left: 15px;
+  width: 270px;
+  height: 44px;
+  border-bottom: 1px #eee black;
 }
 </style>

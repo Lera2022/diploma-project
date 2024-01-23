@@ -15,7 +15,8 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="./style.css">
-
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&lang=ru_RU" type="text/javascript">
+    </script>
 </head>
 
 <body>
@@ -54,14 +55,15 @@
                 </li>
             </div>
 
+            <div id="app">
+                <ul>
+                    <tree-item class="item" :model="treeData"></tree-item>
+                </ul>
+            </div>
 
         </div>
-        <div id="app">
-            <ul>
-                <tree-item class="item" :model="treeData"></tree-item>
-            </ul>
-        </div>
     </header>
+    <main></main>
 </body>
 
 </html>
