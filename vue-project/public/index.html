@@ -25,8 +25,25 @@
 
             const {
                 YMap,
-                YMapDefaultSchemeLayer
+                YMapDefaultSchemeLayer,
+                YMapDefaultFeaturesLayer,
+                YMapMarker
             } = ymaps3;
+
+            // data for marlers
+            const markerProps = [{
+                coordinates: [37.623, 55.752],
+                iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/yellow-capybara.png',
+                message: "I'm yellow capybara!"
+            }, {
+                coordinates: [38.125, 55.622],
+                iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/purple-capybara.png',
+                message: "I'm purple capybara!"
+            }, {
+                coordinates: [37.295, 55.415],
+                iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/green-capybara.png',
+                message: "I'm green capybara!"
+            }];
 
             // Иницилиазируем карту
             const map = new YMap(
@@ -43,10 +60,22 @@
                         zoom: 5
                     }
                 }
+
             );
 
             // Добавляем слой для отображения схематической карты
             map.addChild(new YMapDefaultSchemeLayer());
+            map.addChild(new YMapDefaultFeaturesLayer());
+
+            markerProps.forEach((markerProp) => {
+                const markerElement = document.createElement('img');
+                markerElement.className = 'icon-marker';
+                markerElement.src = markerProp.iconSrc;
+                markerElement.onclick = () => alert(markerProp.message);
+                map.addChild(new YMapMarker({
+                    coordinates: markerProp.coordinates
+                }, markerElement));
+            });
         }
     </script>
 </head>
@@ -86,7 +115,16 @@
                     <a class="text__header-bottom" href="tel:+78002006615">8 (800) 200-66-15</a>
                 </li>
             </div>
-
+            <div>
+                <select name="city" id="billing_area" class="country_to_state city_select " autocomplete="city"
+                    required>
+                    <option value="">Выбрать область</option>
+                </select>
+                <select name="city" id="billing_city" class="country_to_state city_select " autocomplete="city"
+                    required>
+                    <option value="">Выбрать город</option>
+                </select>
+            </div>
             <div id="app">
                 <ul>
                     <tree-item class="item" :model="treeData"></tree-item>
@@ -98,6 +136,36 @@
     <main class="map">
         <div id="map" style="width: 950px; height: 700px">
     </main>
+    <script>
+        let dataList = {};
+        fetch('https://api.hh.ru/areas/113').then(response => {
+            return response.json()
+        }).then(
+            json => {
+                dataList = json;
+                json.areas.forEach(area => {
+                    var opt = document.createElement('option');
+                    opt.value = area.id;
+                    opt.innerHTML = area.name;
+                    billing_area.appendChild(opt);
+                });
+            }
+        );
+
+
+        billing_area.addEventListener('change', () => {
+            billing_city.innerHTML = '';
+            dataList.areas.filter(item => item.id == billing_area.options[billing_area.selectedIndex].value)[0].areas.forEach(
+                area => {
+                    var opt = document.createElement('option');
+                    opt.value = area.id;
+                    opt.innerHTML = area.name;
+                    billing_city.appendChild(opt);
+                }
+            )
+
+        });
+    </script>
 </body>
 
 </html>

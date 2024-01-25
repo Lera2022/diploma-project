@@ -60,3 +60,12 @@ li {
     margin-top: 50px;
     margin-left: 320px;
 }
+
+.icon-marker {
+    cursor: pointer;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    position: relative;
+    transform: translate(-50%, -50%);
+}
