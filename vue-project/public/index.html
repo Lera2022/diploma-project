@@ -17,9 +17,22 @@
     <link rel="stylesheet" href="./style.css">
     <script src="https://api-maps.yandex.ru/v3/?apikey=9fa90fbc-ce5f-4dc9-ae6d-433e0ec7338b&lang=ru_RU"></script>
     <script>
-        initMap();
+        const markerProps = [{
+            coordinates: [37.623, 55.752],
+            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/yellow-capybara.png',
+            message: "I'm yellow capybara!"
+        }, {
+            coordinates: [38.125, 55.622],
+            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/purple-capybara.png',
+            message: "I'm purple capybara!"
+        }, {
+            coordinates: [37.295, 55.415],
+            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/green-capybara.png',
+            message: "I'm green capybara!"
+        }];
+        initMap(markerProps);
 
-        async function initMap() {
+        async function initMap(markerProps) {
             // Промис `ymaps3.ready` будет зарезолвлен, когда загрузятся все компоненты основного модуля API
             await ymaps3.ready;
 
@@ -31,19 +44,6 @@
             } = ymaps3;
 
             // data for marlers
-            const markerProps = [{
-                coordinates: [37.623, 55.752],
-                iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/yellow-capybara.png',
-                message: "I'm yellow capybara!"
-            }, {
-                coordinates: [38.125, 55.622],
-                iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/purple-capybara.png',
-                message: "I'm purple capybara!"
-            }, {
-                coordinates: [37.295, 55.415],
-                iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/green-capybara.png',
-                message: "I'm green capybara!"
-            }];
 
             // Иницилиазируем карту
             const map = new YMap(
@@ -116,10 +116,12 @@
                 </li>
             </div>
             <div>
-                <select name="city" id="billing_area" class="country_to_state city_select " autocomplete="city" required>
+                <select name="city" id="billing_area" class="country_to_state city_select " autocomplete="city"
+                    required>
                     <option value="">Выбрать область</option>
                 </select>
-                <select name="city" id="billing_city" class="country_to_state city_select " autocomplete="city" required>
+                <select name="city" id="billing_city" class="country_to_state city_select " autocomplete="city"
+                    required>
                     <option value="">Выбрать город</option>
                 </select>
             </div>
@@ -163,6 +165,27 @@
             )
 
         });
+
+        fetch('https://suggest-maps.yandex.ru/v1/suggest?apikey=&text=санкт')
+            .then(response => response.json()) // Декодируем ответ в формате json
+            .then(data => console.log(data)); // Выводим ответ в консоль
+
+
+
+        markerProps = [{
+            coordinates: [37.623, 55.752],
+            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/yellow-capybara.png',
+            message: "I'm yellow capybara!"
+        }, {
+            coordinates: [38.125, 55.622],
+            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/purple-capybara.png',
+            message: "I'm purple capybara!"
+        }, {
+            coordinates: [37.295, 55.415],
+            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/green-capybara.png',
+            message: "I'm green capybara!"
+        }];
+        initMap(markerProps);
     </script>
 </body>
 
