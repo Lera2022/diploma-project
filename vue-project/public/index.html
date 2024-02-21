@@ -15,66 +15,101 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="./style.css">
-    <script src="https://api-maps.yandex.ru/v3/?apikey=9fa90fbc-ce5f-4dc9-ae6d-433e0ec7338b&lang=ru_RU"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=" type="text/javascript"></script>
+    <script src="../src/direct_geocode.js"></script>
     <script>
-        const markerProps = [{
-            coordinates: [37.623, 55.752],
-            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/yellow-capybara.png',
-            message: "I'm yellow capybara!"
-        }, {
-            coordinates: [38.125, 55.622],
-            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/purple-capybara.png',
-            message: "I'm purple capybara!"
-        }, {
-            coordinates: [37.295, 55.415],
-            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/green-capybara.png',
-            message: "I'm green capybara!"
-        }];
-        initMap(markerProps);
+        let shippingPoint = 'Челябинск';
 
-        async function initMap(markerProps) {
-            // Промис `ymaps3.ready` будет зарезолвлен, когда загрузятся все компоненты основного модуля API
-            await ymaps3.ready;
+        ymaps.ready(init);
 
-            const {
-                YMap,
-                YMapDefaultSchemeLayer,
-                YMapDefaultFeaturesLayer,
-                YMapMarker
-            } = ymaps3;
+        function init(shippingPoint) {
+            var myMap = new ymaps.Map('map', {
+                center: [55.163977, 61.402545],
+                zoom: 9
+            });
 
-            // data for marlers
+            // Поиск координат центра первоначального города.
+            ymaps.geocode('Челябинск', {
+                /**
+                 * Опции запроса
+                 * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/geocode.xml
+                 */
+                // Сортировка результатов от центра окна карты.
+                // boundedBy: myMap.getBounds(),
+                // strictBounds: true,
+                // Вместе с опцией boundedBy будет искать строго внутри области, указанной в boundedBy.
+                // Если нужен только один результат, экономим трафик пользователей.
+                results: 1
+            }).then(function(res) {
+                // Выбираем первый результат геокодирования.
+                var firstGeoObject = res.geoObjects.get(0),
+                    // Координаты геообъекта.
+                    coords = firstGeoObject.geometry.getCoordinates(),
+                    // Область видимости геообъекта.
+                    bounds = firstGeoObject.properties.get('boundedBy');
 
-            // Иницилиазируем карту
-            const map = new YMap(
-                // Передаём ссылку на HTMLElement контейнера
-                document.getElementById('map'),
+                firstGeoObject.options.set('preset', 'islands#darkBlueDotIconWithCaption');
+                // Получаем строку с адресом и выводим в иконке геообъекта.
+                firstGeoObject.properties.set('iconCaption', firstGeoObject.getAddressLine());
 
-                // Передаём параметры инициализации карты
-                {
-                    location: {
-                        // Координаты центра карты
-                        center: [55.159902, 61.402554],
+                // Добавляем первый найденный геообъект на карту.
+                myMap.geoObjects.add(firstGeoObject);
+                // Масштабируем карту на область видимости геообъекта.
+                myMap.setBounds(bounds, {
+                    // Проверяем наличие тайлов на данном масштабе.
+                    checkZoomRange: true
+                });
 
-                        // Уровень масштабирования
-                        zoom: 5
-                    }
-                }
+                /**
+                 * Все данные в виде javascript-объекта.
+                 */
+                console.log('Все данные геообъекта: ', firstGeoObject.properties.getAll());
+                /**
+                 * Метаданные запроса и ответа геокодера.
+                 * @see https://api.yandex.ru/maps/doc/geocoder/desc/reference/GeocoderResponseMetaData.xml
+                 */
+                console.log('Метаданные ответа геокодера: ', res.metaData);
+                /**
+                 * Метаданные геокодера, возвращаемые для найденного объекта.
+                 * @see https://api.yandex.ru/maps/doc/geocoder/desc/reference/GeocoderMetaData.xml
+                 */
+                console.log('Метаданные геокодера: ', firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData'));
+                /**
+                 * Точность ответа (precision) возвращается только для домов.
+                 * @see https://api.yandex.ru/maps/doc/geocoder/desc/reference/precision.xml
+                 */
+                console.log('precision', firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData.precision'));
+                /**
+                 * Тип найденного объекта (kind).
+                 * @see https://api.yandex.ru/maps/doc/geocoder/desc/reference/kind.xml
+                 */
+                console.log('Тип геообъекта: %s', firstGeoObject.properties.get('metaDataProperty.GeocoderMetaData.kind'));
+                console.log('Название объекта: %s', firstGeoObject.properties.get('name'));
+                console.log('Описание объекта: %s', firstGeoObject.properties.get('description'));
+                console.log('Полное описание объекта: %s', firstGeoObject.properties.get('text'));
+                /**
+                 * Прямые методы для работы с результатами геокодирования.
+                 * @see https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeocodeResult-docpage/#getAddressLine
+                 */
+                console.log('\nГосударство: %s', firstGeoObject.getCountry());
+                console.log('Населенный пункт: %s', firstGeoObject.getLocalities().join(', '));
+                console.log('Адрес объекта: %s', firstGeoObject.getAddressLine());
+                console.log('Наименование здания: %s', firstGeoObject.getPremise() || '-');
+                console.log('Номер здания: %s', firstGeoObject.getPremiseNumber() || '-');
 
-            );
-
-            // Добавляем слой для отображения схематической карты
-            map.addChild(new YMapDefaultSchemeLayer());
-            map.addChild(new YMapDefaultFeaturesLayer());
-
-            markerProps.forEach((markerProp) => {
-                const markerElement = document.createElement('img');
-                markerElement.className = 'icon-marker';
-                markerElement.src = markerProp.iconSrc;
-                markerElement.onclick = () => alert(markerProp.message);
-                map.addChild(new YMapMarker({
-                    coordinates: markerProp.coordinates
-                }, markerElement));
+                /**
+                 * Если нужно добавить по найденным геокодером координатам метку со своими стилями и контентом балуна, создаем новую метку по координатам найденной и добавляем ее на карту вместо найденной.
+                 */
+                /**
+                 var myPlacemark = new ymaps.Placemark(coords, {
+                 iconContent: 'моя метка',
+                 balloonContent: 'Содержимое балуна <strong>моей метки</strong>'
+                 }, {
+                 preset: 'islands#violetStretchyIcon'
+                 });
+        
+                 myMap.geoObjects.add(myPlacemark);
+                 */
             });
         }
     </script>
@@ -115,16 +150,14 @@
                     <a class="text__header-bottom" href="tel:+78002006615">8 (800) 200-66-15</a>
                 </li>
             </div>
-            <div>
-                <select name="city" id="billing_area" class="country_to_state city_select " autocomplete="city"
-                    required>
+            <!-- <div>
+                <select name="city" id="billing_area" class="country_to_state city_select " autocomplete="city" required>
                     <option value="">Выбрать область</option>
                 </select>
-                <select name="city" id="billing_city" class="country_to_state city_select " autocomplete="city"
-                    required>
+                <select name="city" id="billing_city" class="country_to_state city_select " autocomplete="city" required>
                     <option value="">Выбрать город</option>
                 </select>
-            </div>
+            </div> -->
             <div id="app">
                 <ul>
                     <tree-item class="item" :model="treeData"></tree-item>
@@ -134,9 +167,10 @@
         </div>
     </header>
     <main class="map">
+        <p>Выберите город отгрузки</p>
         <div id="map" style="width: 950px; height: 700px">
     </main>
-    <script>
+    <!-- <script>
         let dataList = {};
         fetch('https://api.hh.ru/areas/113').then(response => {
             return response.json()
@@ -166,27 +200,25 @@
 
         });
 
-        fetch('https://suggest-maps.yandex.ru/v1/suggest?apikey=&text=санкт')
-            .then(response => response.json()) // Декодируем ответ в формате json
-            .then(data => console.log(data)); // Выводим ответ в консоль
 
 
 
-        markerProps = [{
-            coordinates: [37.623, 55.752],
-            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/yellow-capybara.png',
-            message: "I'm yellow capybara!"
-        }, {
-            coordinates: [38.125, 55.622],
-            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/purple-capybara.png',
-            message: "I'm purple capybara!"
-        }, {
-            coordinates: [37.295, 55.415],
-            iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/green-capybara.png',
-            message: "I'm green capybara!"
-        }];
-        initMap(markerProps);
-    </script>
+
+        // markerProps = [{
+        //     coordinates: [37.623, 55.752],
+        //     iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/yellow-capybara.png',
+        //     message: "I'm yellow capybara!"
+        // }, {
+        //     coordinates: [38.125, 55.622],
+        //     iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/purple-capybara.png',
+        //     message: "I'm purple capybara!"
+        // }, {
+        //     coordinates: [37.295, 55.415],
+        //     iconSrc: 'https://yastatic.net/s3/front-maps-static/maps-front-jsapi-3/examples/images/marker-custom-icon/green-capybara.png',
+        //     message: "I'm green capybara!"
+        // }];
+        // initMap(markerProps);
+    </script> -->
 </body>
 
 </html>

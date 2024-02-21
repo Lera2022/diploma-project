@@ -3,7 +3,7 @@
     <ListForm :submit-handler="submitHandler" />
     <div>
       <div v-for="(todo, idx) in newTodoList">
-        {{ todo }}
+        {{ todo.name }}
       </div>
     </div>
   </div>
@@ -16,7 +16,7 @@ export default {
   name: 'DiplomaProjectListsItem',
   data() {
     return {
-      todos: ['Lorem ipsum dolor', 'sit amet, consectetur', 'error et facilis', 'Aliquam beatae deserunt'],
+      todos: [{ name: 'гидравлическая тележка (рохля) самоходная', url: 'https://deltainzhiniring.ru/sklad/telezhki/samoxodnyie/' }, { name: 'кипятильник', url: 'https://deltainzhiniring.ru/kuxonnoe/teplovoe/kipyatilniki/' }, { name: 'листогибочный станок', url: 'https://deltainzhiniring.ru/stanki/listogibyi/' }, { name: 'генератор бензиновый', url: 'https://deltainzhiniring.ru/generatoryi/benzinovyie/' }],
       pattern: ''
     };
   },
@@ -36,4 +36,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.hidden {
+  visibility: hidden;
+}
+</style>

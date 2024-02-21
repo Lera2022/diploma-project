@@ -136,19 +136,29 @@ export default {
 
 <template>
   <div class="burger">
-
-    <ul>
-      <TreeItem class="item" :model="treeData"></TreeItem>
-    </ul>
+    <div class="block">
+      <ul>
+        <TreeItem class="item" :model="treeData"></TreeItem>
+      </ul>
+    </div>
     <!-- <CityList /> -->
-    <ListsItem />
+    <div class="catalog">
+
+      <ListsItem />
+    </div>
   </div>
 </template>
 
 <style>
+.block {
+  display: flex;
+  gap: 50px;
+}
+
 .item {
   cursor: pointer;
   line-height: 1.5;
+  /* margin-bottom: 40px; */
 }
 
 .bold {
@@ -163,7 +173,7 @@ export default {
 }
 
 .burger {
-  display: flex;
+  /* display: flex; */
   gap: 20px;
   /* background-image: url(../public/icon_hamburger.png);
   background-repeat: no-repeat;
@@ -183,5 +193,10 @@ export default {
   width: 270px;
   height: 44px;
   border-bottom: 1px #eee black;
+}
+
+.catalog {
+  margin-left: 25px;
+  margin-top: 40px;
 }
 </style>

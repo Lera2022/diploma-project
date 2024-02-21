@@ -21,7 +21,7 @@
   <div>
     <form @submit.prevent>
       <label for="todo">
-        <input type="text" id="todo" placeholder="Todo..." v-model="newTodo" @input.prevent="onsubmit">
+        <input type="text" id="todo" placeholder="Выберите товар..." v-model="newTodo" @input.prevent="onsubmit">
       </label>
     </form>
   </div>
