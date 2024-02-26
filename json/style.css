@@ -52,8 +52,11 @@ li {
     margin-right: 20px;
 }
 
-html, body{
-    width: 100%; padding: 0; margin: 0;
+html,
+body {
+    width: 100%;
+    padding: 0;
+    margin: 0;
     font-family: Arial;
 }
 
@@ -61,19 +64,22 @@ html, body{
     width: 100%;
     height: 500px;
 }
-    /* Оформление меню (начало)*/
+
+
+/* Оформление меню (начало)*/
+
 .menu {
     list-style: none;
     padding: 5px;
-
     margin: 0;
 }
+
 .submenu {
     list-style: none;
-
     margin: 0 0 0 20px;
     padding: 0;
 }
+
 .submenu li {
     font-size: 90%;
 }
@@ -87,7 +93,8 @@ html, body{
     transform: translate(-50%, -50%);
 }
 
-#suggest1, #suggest2 {
+#suggest1,
+#suggest2 {
     width: 300px;
     margin: 5px;
 }
@@ -97,21 +104,21 @@ html, body{
     margin-bottom: 10px;
 }
 
-/* .hidden .ymaps-2-1-79-listbox__button-arrow {
+.main_menu {
+    margin-left: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.main_menu__item {
+    padding: 10px 0;
+}
+
+.main_menu:last-child {
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+.hidden {
     visibility: hidden;
 }
-
-.ymaps-2-1-79-listbox {
-    margin-left: 45px;
-}
-
-.ymaps-2-1-79-listbox__button {
-    background-color: #2e7182;
-    height: 40px;
-}
-
-.ymaps-2-1-79-listbox__button-text {
-    color: #fff;
-    font-size: 24px;
-    padding: 5px;
-} */
