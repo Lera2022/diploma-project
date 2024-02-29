@@ -91,13 +91,16 @@ body {
 }
 
 .main_menu {
-    margin-left: 30px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .main_menu__item {
     padding: 10px 0;
+}
+
+.menu_item__left {
+    margin-left: -60px;
 }
 
 .main_menu:last-child {

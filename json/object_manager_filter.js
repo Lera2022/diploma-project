@@ -121,7 +121,7 @@ function init() {
     }
 
     // Добавляем коллекцию меток на карту.
-    myMap.geoObjects.add(myCollection);
+    // myMap.geoObjects.add(myCollection);
 
     // Создаем экземпляр класса ymaps.control.SearchControl
     var mySearchControl = new ymaps.control.SearchControl({
